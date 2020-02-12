@@ -1,0 +1,57 @@
+.MODEL SMALL
+.STACK 100H  
+.DATA 
+ ST1 DB 'ENTER N: $' 
+ ST2 DB 'ENTER R: $'
+ ST3 DB 'nCr is: $'
+ .CODE
+MAIN PROC       
+      MOV AX,@DATA
+      MOV DS,AX 
+      LEA DX,ST1
+      MOV AH,9
+      INT 21H    
+      CALL INDEC 
+      MOV BX, AX
+      MOV CX,AX
+      CALL FACTORIAL
+      PUSH AX      
+      CALL NEXTLINE
+	  MOV AX, @DATA
+      MOV DS,AX 
+      LEA DX,ST2
+      MOV AH,9
+      INT 21H   
+      CALL INDEC 
+      MOV DX,AX
+      SUB BX,AX
+      MOV CX,DX
+      CALL FACTORIAL
+      PUSH AX
+      MOV CX,BX
+      CALL FACTORIAL
+      POP DX
+      MUL DX
+      MOV BX,AX
+      POP AX
+      DIV BX                
+	CALL OUTDEC
+    MOV AH , 4CH
+    INT 21H
+MAIN ENDP
+       
+;INDEC PROC
+;INDEC ENDP       
+          
+        
+;FACTORIAL PROC
+;FACTORIAL ENDP
+
+;OUTDEC PROC
+;OUTDEC ENDP        
+          PUSH AX
+          PUSH DX
+;NEXTLINE PROC
+;NEXTLINE ENDP
+  
+END MAIN

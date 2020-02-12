@@ -1,0 +1,52 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+   MSG1  DB  'Enter M : $'
+   MSG2  DB  'Enter N : $'
+   MSG3  DB  'The GCD of M and N is : $'
+ .CODE
+   MAIN PROC
+     MOV AX, @DATA                
+     MOV DS, AX
+     LEA DX, MSG1             
+     MOV AH, 9
+     INT 21H
+     CALL INDEC                  
+     PUSH AX     	
+     CALL NEXTLINE
+     LEA DX, MSG2             
+     MOV AH, 9
+     INT 21H
+     CALL INDEC                  
+     MOV BX, AX                   
+     POP AX                      
+     @A:                   
+       XOR DX, DX                 
+       DIV BX                    
+       CMP DX, 0                 
+       JE @END               
+       MOV AX, BX                 
+       MOV BX, DX                 
+     JMP @A                  
+     @END:               
+	CALL NEXTLINE 	
+     LEA DX, MSG3             
+     MOV AH, 9
+     INT 21H
+     MOV AX, BX                  
+     CALL OUTDEC                 
+	 CALL NEXTLINE
+     MOV AH, 4CH              
+     INT 21H
+   MAIN ENDP
+
+;INDEC PROC
+;INDEC ENDP                                  
+ 
+;OUTDEC PROC
+;OUTDEC ENDP
+
+;NEXTLINE PROC 
+;NEXTLINE ENDP
+ 
+END MAIN
